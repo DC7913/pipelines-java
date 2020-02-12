@@ -25,6 +25,7 @@ stages:
         testResultsFiles: '**/surefire-reports/TEST-*.xml'
         goals: 'package'
   - job:  ReportJob # will run on "StageAPool" pool based on the pool defined on the stage
+    dependsOn: Build
     steps:
     - task: PublishCodeCoverageResults@1
       inputs:
