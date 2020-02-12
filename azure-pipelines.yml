@@ -7,8 +7,6 @@
 trigger:
 - master
 
-
-
 stages:
 - stage: Build
   pool:
@@ -26,13 +24,7 @@ stages:
         publishJUnitResults: true
         testResultsFiles: '**/surefire-reports/TEST-*.xml'
         goals: 'package'
-
-
-- stage: Report
-  pool:
-    vmImage: 'ubuntu-latest'
-  jobs:
-  - job: ReportJob # will run on "StageAPool" pool based on the pool defined on the stage
+  - job:  ReportJob # will run on "StageAPool" pool based on the pool defined on the stage
     steps:
     - task: PublishCodeCoverageResults@1
       inputs:
@@ -40,3 +32,11 @@ stages:
         summaryFileLocation: "$(System.DefaultWorkingDirectory)/**/site/jacoco/jacoco.xml"
         reportDirectory: "$(System.DefaultWorkingDirectory)/**/site/jacoco"
         failIfCoverageEmpty: true
+
+- stage: Finish
+  pool:
+    vmImage: 'ubuntu-latest'
+  jobs: 
+  - job: FinishJob
+    steps: 
+    - bash: echo "Hello World"
