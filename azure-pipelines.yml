@@ -12,7 +12,7 @@ stages:
   pool:
     vmImage: 'ubuntu-latest'
   jobs:
-  - job: Build # will run on "StageAPool" pool based on the pool defined on the stage
+  - job: Build 
     steps:
     - task: Maven@3
       inputs:
@@ -24,9 +24,6 @@ stages:
         publishJUnitResults: true
         testResultsFiles: '**/surefire-reports/TEST-*.xml'
         goals: 'package'
-  - job:  ReportJob # will run on "StageAPool" pool based on the pool defined on the stage
-    dependsOn: Build
-    steps:
     - task: PublishCodeCoverageResults@1
       inputs:
         codeCoverageTool: "JaCoCo"
