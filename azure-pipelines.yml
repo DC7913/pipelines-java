@@ -7,12 +7,12 @@
 trigger:
 - master
 
-pool:
-  vmImage: 'ubuntu-latest'
+
 
 stages:
 - stage: Build
-  pool: vmImage
+  pool:
+    vmImage: 'ubuntu-latest'
   jobs:
   - job: Build # will run on "StageAPool" pool based on the pool defined on the stage
     steps:
@@ -29,7 +29,8 @@ stages:
 
 
 - stage: Report
-  pool: vmImage
+  pool:
+    vmImage: 'ubuntu-latest'
   jobs:
   - job: ReportJob # will run on "StageAPool" pool based on the pool defined on the stage
     steps:
