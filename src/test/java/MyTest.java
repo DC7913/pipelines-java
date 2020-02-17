@@ -15,4 +15,7 @@ public class MyTest {
     @Test
     public void test_method_3() {
     }
+    @Test
+    public void test_method_4() {
+    }
 }
