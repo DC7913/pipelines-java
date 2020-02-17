@@ -7,14 +7,15 @@ trigger:
 - master
 
 stages:
-- stage: Build
+- stage: Build 
   pool:
     vmImage: 'ubuntu-latest'
   jobs:
-  - job: Build 
+  - job: Build_job
 
     steps:
     - task: Maven@3
+      displayName: Complile 
       inputs:
         mavenPomFile: 'pom.xml'
         mavenOptions: '-Xmx3072m'
@@ -24,3 +25,18 @@ stages:
         publishJUnitResults: true
         testResultsFiles: '**/surefire-reports/TEST-*.xml'
         goals: 'package'
+    - task: PublishCodeCoverageResults@1
+      displayName: Test_results
+      inputs:
+        codeCoverageTool: "JaCoCo"
+        summaryFileLocation: "$(System.DefaultWorkingDirectory)/**/site/jacoco/jacoco.xml"
+        reportDirectory: "$(System.DefaultWorkingDirectory)/**/site/jacoco"
+        failIfCoverageEmpty: true
+
+- stage: Finish
+  pool:
+    vmImage: 'ubuntu-latest'
+  jobs: 
+  - job: FinishJob
+    steps: 
+    - bash: echo "Hello World"
